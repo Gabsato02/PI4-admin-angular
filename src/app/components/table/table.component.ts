@@ -15,4 +15,11 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  edit(id: number): void {
+    console.log(id);
+  }
+
+  delete(id: number): void {
+    console.log(id);
+  }
 }
