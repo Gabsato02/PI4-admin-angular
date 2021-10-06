@@ -10,10 +10,19 @@ import { TableComponent } from './components/table/table.component';
 // MATERIAL
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 const generalComponents = [AppComponent, CategoryComponent, TableComponent];
 
-const materialComponents = [MatToolbarModule, MatTableModule];
+const materialComponents = [
+  MatButtonModule,
+  MatIconModule,
+  MatMenuModule,
+  MatTableModule,
+  MatToolbarModule
+];
 
 
 @NgModule({
