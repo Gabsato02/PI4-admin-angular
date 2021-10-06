@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/category';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-category',
@@ -7,35 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
   categoryHeaders = {id: 'ID', name: 'Nome', created_at: 'Criado em', updated_at: 'Atualizado em', deleted_at: 'Apagado em'};
-  categoryContent = [
-    {
-      id: 1,
-      name: 'Espadas',
-      created_at: '2021-09-20 18:49:04',
-      updated_at: '2021-09-20 18:49:04',
-      deleted_at: null,
-      items: null
-    },
-    {
-      id: 2,
-      name: 'Categoria 2',
-      created_at: '2021-09-23 21:17:30',
-      updated_at: '2021-09-23 21:17:30',
-      deleted_at: null,
-      items: null
-    },
-    {
-      id: 3,
-      name: 'Categoria 3',
-      created_at: '2021-12-23 21:17:30',
-      updated_at: '2021-01-23 21:17:30',
-      deleted_at: null,
-      items: null
-    },
-  ];
-  constructor() { }
+  categoryContent: Category[] = [];
+
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.list();
+  }
+
+  list(): void {
+    this.categoryService.list().subscribe(categories => {
+      this.categoryContent = categories;
+    });
   }
 
 }
