@@ -1,7 +1,24 @@
 <div class="category mt-3">
+  <div class="mw-100 d-flex flex-column justify-content-center m-auto p-5">
+
+    <div class="row justify-content-center">
+      <div class="col-6 d-flex justify-content-center">
+        <mat-form-field appearance="fill">
+          <mat-label>Nome da Categoria</mat-label>
+          <input matInput [(ngModel)]="selectedCategory.name">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-6 d-flex justify-content-center">
+        <button mat-raised-button color="accent" (click)="save()">Adicionar</button>
+      </div>
+    </div>
+  </div>
   <div class="row mw-100 d-flex justify-content-center m-auto">
     <div class="category__table col-12">
-      <app-table [headers]="categoryHeaders" [content]="categoryContent"></app-table>
+      <app-table [headers]="categoryHeaders" [content]="categoryContent" (removeEvent)="confirmRemove($event)"></app-table>
     </div>
   </div>
 </div>
