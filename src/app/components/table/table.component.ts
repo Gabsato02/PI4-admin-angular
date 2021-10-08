@@ -12,6 +12,7 @@ export class TableComponent implements OnInit {
   @Input() content!: any;
   // Passando um evento para o pai
   @Output() removeEvent = new EventEmitter<number>();
+  @Output() editEvent = new EventEmitter<number>();
   objectKeys = Object.keys;
 
   constructor() {}
@@ -19,7 +20,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {}
 
   edit(id: number): void {
-    console.log(id);
+    this.editEvent.emit(id);
   }
 
   remove(id: number): void {
