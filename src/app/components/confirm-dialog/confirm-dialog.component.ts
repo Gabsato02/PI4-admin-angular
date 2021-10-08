@@ -9,9 +9,14 @@ import { ConfirmationVo } from './confirm-vo';
 })
 export class ConfirmDialogComponent implements OnInit {
 
+  title = 'Confirmar Ação';
+  message = 'Tem certeza que deseja fazer isso?';
+
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ConfirmationVo) { }
 
   ngOnInit(): void {
+    this.title = this.data.title;
+    this.message = this.data.message;
   }
 
   onConfirm(): void {

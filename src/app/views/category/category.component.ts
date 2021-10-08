@@ -32,15 +32,16 @@ export class CategoryComponent implements OnInit {
 
   // FUNÇÕES PÚBLICAS DE UTILIDADE
   confirmRemove(id?: number): void {
+    const categoryName = this.categoryContent.find((category) => category.id === id)?.name;
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '700px',
       data: {
         answer: false,
-        id
+        id,
+        title: 'Confirmar ação',
+        message: `Deseja realmente apagar a categoria ${categoryName}?`
       },
     });
-
-    console.log(id);
 
     dialog.afterClosed().subscribe((confirmationVo: ConfirmationVo) => {
       if (!confirmationVo.answer) {
@@ -51,9 +52,36 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  resetForm(): void {
+    this.selectedCategory = {
+      id: undefined,
+      name: '',
+      created_at: '',
+      updated_at: '',
+      deleted_at: ''
+    };
+    this.updateMode = false;
+  }
+
+  selectEdit(id?: number): void {
+    const selectedCategory = this.categoryContent.find((category) => category.id === id);
+    if (!selectedCategory) { return; }
+
+    this.updateMode = true;
+    this.selectedCategory = {
+      id: selectedCategory.id,
+      name: selectedCategory.name,
+      created_at: selectedCategory.created_at,
+      updated_at: selectedCategory.updated_at,
+      deleted_at: selectedCategory.deleted_at
+    };
+  }
+
   save(): void {
     if (!this.updateMode) {
       this.insert();
+    } else {
+      this.update();
     }
   }
 
@@ -79,15 +107,20 @@ export class CategoryComponent implements OnInit {
     const payload = {
       name: this.selectedCategory.name,
     };
+
+    if (!payload?.name) {
+      this.showSnackbar('Por favor, preencha corretamente os campos.');
+      return;
+    }
+
     try {
       await this.categoryService.insert(payload).subscribe(() => {
         this.list();
         this.showSnackbar('Usuário inserido com sucesso!');
+        this.resetForm();
       });
     } catch (error) {
       this.handleError(error);
-    } finally {
-      this.resetForm();
     }
   }
 
@@ -96,7 +129,7 @@ export class CategoryComponent implements OnInit {
     try {
       await this.categoryService.remove(id).subscribe(() => {
         this.list();
-        this.showSnackbar('Usuário excluído com sucesso!');
+        this.showSnackbar('Categoria excluída com sucesso!');
       });
     } catch (error) {
       this.handleError(error);
@@ -105,19 +138,26 @@ export class CategoryComponent implements OnInit {
     }
   }
 
+  private async update(): Promise<void> {
+    if (!this.selectedCategory?.id || !this.selectedCategory?.name) {
+      this.showSnackbar('Por favor, preencha corretamente os campos.');
+      return;
+    }
+
+    try {
+      await this.categoryService.update(this.selectedCategory).subscribe(() => {
+        this.list();
+        this.showSnackbar('Categoria editada com sucesso!');
+        this.resetForm();
+      });
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   // FUNÇÕES PRIVADAS DE UTILIDADE
   private handleError(error: unknown): void {
     const e = error as HttpErrorResponse;
     this.showSnackbar(e.statusText);
-  }
-
-  private resetForm(): void {
-    this.selectedCategory = {
-      id: undefined,
-      name: '',
-      created_at: '',
-      updated_at: '',
-      deleted_at: ''
-    };
   }
 }

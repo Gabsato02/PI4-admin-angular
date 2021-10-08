@@ -25,4 +25,9 @@ export class CategoryService {
   remove(id: number): Observable<any> {
     return this.http.delete(`${this.endpoint}/delete/${id}`);
   }
+
+  update(category?: Category): Observable<Category> {
+    if (!category) { return EMPTY; }
+    return this.http.put<Category>(`${this.endpoint}/update/${category.id}`, category);
+  }
 }
