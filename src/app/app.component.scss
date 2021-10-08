@@ -1,9 +1,15 @@
 .navbar {
+  min-width: 200px;
+  padding: 8px;
   &__link {
     cursor: pointer;
     transition: all ease-in-out 0.2s;
+    .icon {
+      margin-right: 8px;
+    }
     &:hover {
       transform: scale(1.1);
     }
   }
 }
+

@@ -1,7 +1,34 @@
-<mat-toolbar class="navbar" class="d-flex justify-content-evenly" color="primary">
-  <span class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active" >Home</span>
-  <span class="navbar__link" [routerLink]="['/categoria']" routerLinkActive="router-link-active" >Categoria</span>
-  <span class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active" >Logout</span>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Pathfinder</h1>
+  </mat-toolbar-row>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" class="navbar">
+    <mat-nav-list>
+      <a mat-list-item class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active">
+        <mat-icon class="icon">home</mat-icon>
+        Home
+      </a>
+      <a mat-list-item class="navbar__link" [routerLink]="['/categoria']" routerLinkActive="router-link-active">
+        <mat-icon class="icon">category</mat-icon>
+        Categoria
+      </a>
+      <a mat-list-item class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active">
+        <mat-icon class="icon">logout</mat-icon>
+        Sair
+      </a>
+     </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="min-height: calc(100vh - 74px)">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </mat-sidenav-content>  
+</mat-sidenav-container>
