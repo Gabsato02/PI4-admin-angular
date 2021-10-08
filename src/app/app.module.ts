@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+
 // COMPONENTES
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './views/category/category.component';
@@ -21,6 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 const generalComponents = [AppComponent, CategoryComponent, ConfirmDialogComponent, TableComponent];
 
@@ -30,7 +33,9 @@ const materialComponents = [
   MatIconModule,
   MatInputModule,
   MatFormFieldModule,
+  MatListModule,
   MatMenuModule,
+  MatSidenavModule,
   MatSnackBarModule,
   MatTableModule,
   MatToolbarModule,
