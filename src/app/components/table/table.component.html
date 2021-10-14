@@ -1,7 +1,9 @@
 <mat-table [dataSource]="content" class="mat-elevation-z8 table">
   <ng-container *ngFor="let item of objectKeys(headers); let i = index" [matColumnDef]="item" >
     <mat-header-cell *matHeaderCellDef>{{headers[item]}}</mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="element.deleted_at ? 'bg-danger' : ''">{{element[item]}}</mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="element.deleted_at ? 'bg-danger' : ''">
+      <p>{{element[item]}}</p>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="actions">

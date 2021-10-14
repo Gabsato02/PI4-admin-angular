@@ -4,11 +4,23 @@
   th {
     vertical-align: middle;
   }
+  .mat-cell {
+    min-height: 80px;
+  }
   .mat-column-id {
     flex: 1;
   }
   .mat-column-name {
     flex: 2;
+    p {
+      max-width: 100%;
+    }
+  }
+  .mat-column-description {
+    flex: 4;
+    p {
+      max-width: 200px;
+    }
   }
   .mat-column-created_at,
   .mat-column-updated_at,

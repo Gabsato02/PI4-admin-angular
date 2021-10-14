@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { TraitComponent } from './views/trait/trait.component';
 
 const generalComponents = [AppComponent, CategoryComponent, ConfirmDialogComponent, TableComponent];
 
@@ -45,6 +46,7 @@ const materialComponents = [
 @NgModule({
   declarations: [
     generalComponents,
+    TraitComponent,
   ],
   imports: [
     BrowserModule,
