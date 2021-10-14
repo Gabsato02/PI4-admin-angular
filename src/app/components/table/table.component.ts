@@ -13,6 +13,7 @@ export class TableComponent implements OnInit {
   // Passando um evento para o pai
   @Output() removeEvent = new EventEmitter<number>();
   @Output() editEvent = new EventEmitter<number>();
+  @Output() restoreEvent = new EventEmitter<number>();
   objectKeys = Object.keys;
 
   constructor() {}
@@ -25,5 +26,9 @@ export class TableComponent implements OnInit {
 
   remove(id: number): void {
     this.removeEvent.emit(id);
+  }
+
+  restore(id: number): void {
+    this.restoreEvent.emit(id);
   }
 }

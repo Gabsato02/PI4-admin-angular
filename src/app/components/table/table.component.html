@@ -1,22 +1,25 @@
 <mat-table [dataSource]="content" class="mat-elevation-z8 table">
   <ng-container *ngFor="let item of objectKeys(headers); let i = index" [matColumnDef]="item" >
     <mat-header-cell *matHeaderCellDef>{{headers[item]}}</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{element[item]}}</mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="element.deleted_at ? 'bg-danger' : ''">{{element[item]}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
     
-    <mat-cell *matCellDef="let element">
+    <mat-cell *matCellDef="let element" [ngClass]="element.deleted_at ? 'bg-danger' : ''">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="edit(element.id)">
+      <mat-menu #menu="matMenu" >
+        <button *ngIf="!element.deleted_at" mat-menu-item (click)="edit(element.id)">
           <span>Editar</span>
         </button>
-        <button mat-menu-item (click)="remove(element.id)">
+        <button *ngIf="!element.deleted_at" mat-menu-item (click)="remove(element.id)">
           <span>Excluir</span>
+        </button>
+        <button *ngIf="element.deleted_at" mat-menu-item (click)="restore(element.id)">
+          <span>Restaurar</span>
         </button>
       </mat-menu>
     </mat-cell>

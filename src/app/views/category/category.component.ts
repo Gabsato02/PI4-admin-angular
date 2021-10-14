@@ -52,6 +52,27 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  confirmRestore(id?: number): void {
+    const categoryName = this.categoryContent.find((category) => category.id === id)?.name;
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      width: '700px',
+      data: {
+        answer: false,
+        id,
+        title: 'Confirmar ação',
+        message: `Deseja realmente restaurar a categoria ${categoryName}?`
+      },
+    });
+
+    dialog.afterClosed().subscribe((confirmationVo: ConfirmationVo) => {
+      if (!confirmationVo.answer) {
+        return;
+      } else {
+        this.restore(confirmationVo.id);
+      }
+    });
+  }
+
   resetForm(): void {
     this.selectedCategory = {
       id: undefined,
@@ -148,10 +169,26 @@ export class CategoryComponent implements OnInit {
       await this.categoryService.update(this.selectedCategory).subscribe(() => {
         this.list();
         this.showSnackbar('Categoria editada com sucesso!');
-        this.resetForm();
       });
     } catch (error) {
       this.handleError(error);
+    } finally {
+      this.resetForm();
+    }
+  }
+
+  private async restore(id?: number): Promise<void> {
+    if (!id) { return; }
+    try {
+      await this.categoryService.restore(id).subscribe(() => {
+        this.list();
+        this.showSnackbar('Categoria restaurada com sucesso!');
+      });
+    } catch (error) {
+      this.handleError(error);
+    } finally {
+      this.list();
+      this.resetForm();
     }
   }
 
