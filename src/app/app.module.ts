@@ -25,6 +25,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { TraitComponent } from './views/trait/trait.component';
+import { CharacteristicComponent } from './views/characteristic/characteristic.component';
+import { LoginComponent } from './views/login/login.component';
 
 const generalComponents = [AppComponent, CategoryComponent, ConfirmDialogComponent, TableComponent];
 
@@ -47,6 +49,8 @@ const materialComponents = [
   declarations: [
     generalComponents,
     TraitComponent,
+    CharacteristicComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

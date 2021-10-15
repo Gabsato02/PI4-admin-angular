@@ -1,0 +1,83 @@
+<div class="characteristic mt-3">
+  <div class="mw-100 d-flex flex-column justify-content-center m-auto p-5">
+    <div class="row justify-content-center">
+      <div class="col-8 d-flex justify-content-center">
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>ID</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.id" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.name">
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Descrição</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.description">
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Valor</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.characteristics_value">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de criação</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.created_at" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de atualização</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.updated_at" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de exclusão</mat-label>
+            <input matInput [(ngModel)]="selectedCharacteristic.deleted_at" disabled>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-4 d-flex justify-content-center">
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="resetForm()"
+          class="m-1"
+        >
+          Cancelar
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="save()"
+          class="m-1"
+        >
+          {{ updateMode ? 'Atualizar' : 'Inserir'}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row mw-100 d-flex justify-content-center m-auto">
+    <div class="characteristic__table col-12">
+      <app-table
+        [headers]="characteristicHeaders"
+        [content]="characteristicContent"
+        (removeEvent)="confirmRemove($event)"
+        (editEvent)="selectEdit($event)"
+        (restoreEvent)="confirmRestore($event)"
+      ></app-table>
+    </div>
+  </div>
+</div>
