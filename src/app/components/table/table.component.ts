@@ -26,12 +26,13 @@ export class TableComponent implements AfterViewInit {
 
   constructor() {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
   edit(id: number): void {
+    window.scrollTo({top: 0, behavior: 'smooth'});
     this.editEvent.emit(id);
   }
 
