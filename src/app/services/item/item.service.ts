@@ -42,10 +42,20 @@ export class ItemService {
       description: '',
       volume: '',
       category_id: 0,
+      traits: [],
+      characteristics: [],
       created_at: '',
       updated_at: '',
       deleted_at: ''
     };
     return this.http.put<Item>(`${this.endpoint}/restore/${id}`, item);
+  }
+
+  removeTrait(itemId?: number, traitId?: number): Observable<any> {
+    return this.http.delete(`${this.endpoint}/${itemId}/trait/${traitId}`);
+  }
+
+  removeCharacteristic(itemId?: number, characteristicId?: number): Observable<any> {
+    return this.http.delete(`${this.endpoint}/${itemId}/characteristic/${characteristicId}`);
   }
 }

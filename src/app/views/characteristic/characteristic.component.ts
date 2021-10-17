@@ -149,6 +149,7 @@ export class CharacteristicComponent implements OnInit {
     const payload = {
       name: this.selectedCharacteristic.name,
       description: this.selectedCharacteristic.description,
+      characteristics_value: this.selectedCharacteristic.characteristics_value,
     };
 
     if (!payload?.name) {

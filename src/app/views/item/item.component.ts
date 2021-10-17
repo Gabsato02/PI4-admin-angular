@@ -6,6 +6,13 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
 import { ConfirmationVo } from 'src/app/components/confirm-dialog/confirm-vo';
 import { Item } from 'src/app/models/item';
 import { ItemService } from 'src/app/services/item/item.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { CharacteristicService } from 'src/app/services/characteristic/characteristic.service';
+import { TraitService } from 'src/app/services/trait/trait.service';
+import { Category } from 'src/app/models/category';
+import { FormControl } from '@angular/forms';
+import { Trait } from 'src/app/models/trait';
+import { Characteristic } from 'src/app/models/characteristic';
 
 @Component({
   selector: 'app-item',
@@ -19,7 +26,7 @@ export class ItemComponent implements OnInit {
     price: 'Preço',
     description: 'Descrição',
     volume: 'Volume',
-    category_id: 'Id da Categoria',
+    category_id: 'Categoria',
     created_at: 'Criado em',
     updated_at: 'Atualizado em',
     deleted_at: 'Apagado em'
@@ -32,18 +39,35 @@ export class ItemComponent implements OnInit {
     description: '',
     volume: '',
     category_id: 0,
+    traits: [],
+    characteristics: [],
     created_at: '',
     updated_at: '',
     deleted_at: ''
   };
+  selectedItemCharacteristics: Characteristic[] = [];
+  allTraits: Trait[] = [];
+  allCharacteristics: Characteristic[] = [];
+  allCategories: Category[] = [];
+  categoriesFormControl = new FormControl();
+  allTraitsFormControl = new FormControl();
+  allCharacteristicsFormControl = new FormControl();
   updateMode = false;
 
   constructor(
-    private itemService: ItemService, private dialog: MatDialog, private snackBar: MatSnackBar
+    private itemService: ItemService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private categoryService: CategoryService,
+    private traitService: TraitService,
+    private characteristicService: CharacteristicService,
   ) { }
 
   ngOnInit(): void {
     this.list();
+    this.listCategories();
+    this.listTraits();
+    this.listCharacteristics();
   }
 
   // FUNÇÕES PÚBLICAS DE UTILIDADE
@@ -89,6 +113,20 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  onCharacteristicSelect(characteristic: Characteristic): void {
+    const isRepeated = Boolean(this.selectedItem.characteristics.find((selectedCharacteristic) => {
+      return selectedCharacteristic.id === characteristic.id;
+    }));
+    if (isRepeated) { return; }
+    this.selectedItem.characteristics.push(characteristic);
+  }
+
+  onTraitSelect(trait: Trait): void {
+    const isRepeated = Boolean(this.selectedItem.traits.find((selectedTrait) => selectedTrait.id === trait.id));
+    if (isRepeated) { return; }
+    this.selectedItem.traits.push(trait);
+  }
+
   resetForm(): void {
     this.selectedItem = {
       id: undefined,
@@ -97,6 +135,8 @@ export class ItemComponent implements OnInit {
       description: '',
       volume: '',
       category_id: 0,
+      traits: [],
+      characteristics: [],
       created_at: '',
       updated_at: '',
       deleted_at: ''
@@ -115,6 +155,8 @@ export class ItemComponent implements OnInit {
       price: selectedItem.price,
       description: selectedItem.description,
       volume: selectedItem.volume,
+      traits: selectedItem.traits,
+      characteristics: selectedItem.characteristics,
       category_id: selectedItem.category_id,
       created_at: selectedItem.created_at,
       updated_at: selectedItem.updated_at,
@@ -148,6 +190,39 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  private async listCategories(): Promise<void> {
+    try {
+      await this.categoryService.list().subscribe(categories => {
+        this.allCategories = categories.filter(category => category.deleted_at === null);
+      });
+    } catch (error) {
+      this.allCategories = [];
+      this.handleError(error);
+    }
+  }
+
+  private async listTraits(): Promise<void> {
+    try {
+      await this.traitService.list().subscribe(traits => {
+        this.allTraits = traits;
+      });
+    } catch (error) {
+      this.allTraits = [];
+      this.handleError(error);
+    }
+  }
+
+  private async listCharacteristics(): Promise<void> {
+    try {
+      await this.characteristicService.list().subscribe(characteristics => {
+        this.allCharacteristics = characteristics;
+      });
+    } catch (error) {
+      this.allCharacteristics = [];
+      this.handleError(error);
+    }
+  }
+
   private async insert(): Promise<void> {
     const payload = {
       name: this.selectedItem.name,
@@ -155,6 +230,7 @@ export class ItemComponent implements OnInit {
       description: this.selectedItem.description,
       volume: this.selectedItem.volume,
       category_id: this.selectedItem.category_id,
+      traits: this.selectedItem.traits
     };
 
     if (!payload?.name) {
@@ -188,7 +264,7 @@ export class ItemComponent implements OnInit {
   }
 
   private async update(): Promise<void> {
-    if (!this.selectedItem?.id || !this.selectedItem?.name) {
+    if (!this.selectedItem.id || !this.selectedItem?.name) {
       this.showSnackbar('Por favor, preencha corretamente os campos.');
       return;
     }
@@ -215,8 +291,35 @@ export class ItemComponent implements OnInit {
     } catch (error) {
       this.handleError(error);
     } finally {
-      this.list();
       this.resetForm();
+    }
+  }
+
+  async removeTrait(itemId?: number, traitId?: number): Promise<void> {
+    this.selectedItem.traits = this.selectedItem.traits.filter((trait) => trait.id !== traitId);
+    if (!itemId || !traitId) { return; }
+    try {
+      await this.itemService.removeTrait(itemId, traitId).subscribe(() => {
+        this.list();
+        this.showSnackbar('Traço removido com sucesso!');
+      });
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async removeCharacteristic(itemId?: number, characteristicId?: number): Promise<void> {
+    this.selectedItem.characteristics = this.selectedItem.characteristics.filter((trait) => {
+      return trait.id !== characteristicId;
+    });
+    if (!itemId || !characteristicId) { return; }
+    try {
+      await this.itemService.removeCharacteristic(itemId, characteristicId).subscribe(() => {
+        this.list();
+        this.showSnackbar('Característica removida com sucesso!');
+      });
+    } catch (error) {
+      this.handleError(error);
     }
   }
 

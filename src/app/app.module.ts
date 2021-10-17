@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // COMPONENTES
 import { AppComponent } from './app.component';
@@ -30,6 +30,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 const generalComponents = [
   AppComponent,
@@ -56,6 +58,8 @@ const materialComponents = [
   MatToolbarModule,
   MatSortModule,
   MatPaginatorModule,
+  MatSelectModule,
+  MatChipsModule,
 ];
 
 
@@ -69,6 +73,7 @@ const materialComponents = [
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     materialComponents
   ],
   providers: [],
