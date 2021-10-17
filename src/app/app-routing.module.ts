@@ -5,11 +5,16 @@ import { TraitComponent } from './views/trait/trait.component';
 import { CharacteristicComponent } from './views/characteristic/characteristic.component';
 import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
 import { LoginComponent } from './views/login/login.component';
+import { ItemComponent } from './views/item/item.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'item',
+    component: ItemComponent
   },
   {
     path: 'categoria',

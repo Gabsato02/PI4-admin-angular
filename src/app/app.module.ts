@@ -11,6 +11,10 @@ import { AppComponent } from './app.component';
 import { CategoryComponent } from './views/category/category.component';
 import { TableComponent } from './components/table/table.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { LoginComponent } from './views/login/login.component';
+import { ItemComponent } from './views/item/item.component';
+import { TraitComponent } from './views/trait/trait.component';
+import { CharacteristicComponent } from './views/characteristic/characteristic.component';
 
 // MATERIAL
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,11 +28,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { TraitComponent } from './views/trait/trait.component';
-import { CharacteristicComponent } from './views/characteristic/characteristic.component';
-import { LoginComponent } from './views/login/login.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
-const generalComponents = [AppComponent, CategoryComponent, ConfirmDialogComponent, TableComponent];
+const generalComponents = [
+  AppComponent,
+  CategoryComponent,
+  ConfirmDialogComponent,
+  TableComponent,
+  TraitComponent,
+  CharacteristicComponent,
+  LoginComponent,
+  ItemComponent
+];
 
 const materialComponents = [
   MatButtonModule,
@@ -42,15 +54,14 @@ const materialComponents = [
   MatSnackBarModule,
   MatTableModule,
   MatToolbarModule,
+  MatSortModule,
+  MatPaginatorModule,
 ];
 
 
 @NgModule({
   declarations: [
     generalComponents,
-    TraitComponent,
-    CharacteristicComponent,
-    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+import { Category } from './category';
+import { Characteristic } from './characteristic';
+import { Trait } from './trait';
+
+export interface Item {
+    id?: number;
+    name: string;
+    price: number;
+    description: string;
+    volume: string;
+    category_id: number;
+    created_at: string | null;
+    updated_at: string | null;
+    deleted_at: string | null;
+}
