@@ -26,10 +26,17 @@
       max-width: 90%;
     }
   }
+  .mat-column-role,
+  .mat-column-email {
+    flex: 2;
+    p {
+      max-width: 90%;
+    }
+  }
   .mat-column-created_at,
   .mat-column-updated_at,
   .mat-column-deleted_at {
-    flex: 3;
+    flex: 2;
     p {
       max-width: 90%;
     }
