@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
   <mat-toolbar-row>
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -10,7 +10,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" class="navbar">
     <mat-nav-list>
-      <a mat-list-item class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active">
+      <a mat-list-item class="navbar__link" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
         <mat-icon class="icon">home</mat-icon>
         Home
       </a>
@@ -23,14 +23,18 @@
         Categoria
       </a>
       <a mat-list-item class="navbar__link" [routerLink]="['/traco']" routerLinkActive="router-link-active">
-        <mat-icon class="icon">description</mat-icon>
+        <mat-icon class="icon">sports_kabaddi</mat-icon>
         Traço
       </a>
       <a mat-list-item class="navbar__link" [routerLink]="['/caracteristica']" routerLinkActive="router-link-active">
         <mat-icon class="icon">description</mat-icon>
         Caracteristica
       </a>
-      <a mat-list-item class="navbar__link" [routerLink]="['/']" routerLinkActive="router-link-active">
+      <a mat-list-item class="navbar__link" [routerLink]="['/usuario']" routerLinkActive="router-link-active">
+        <mat-icon class="icon">person</mat-icon>
+        Usuário
+      </a>
+      <a mat-list-item class="navbar__link" (click)="logout(); sidenav.close()" [routerLink]="['/login']" routerLinkActive="router-link-active">
         <mat-icon class="icon">logout</mat-icon>
         Sair
       </a>

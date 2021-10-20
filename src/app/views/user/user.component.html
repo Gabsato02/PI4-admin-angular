@@ -1,0 +1,89 @@
+<div class="user mt-3">
+  <div class="mw-100 d-flex flex-column justify-content-center m-auto p-5">
+    <div class="row justify-content-center">
+      <div class="col-6 d-flex justify-content-center">
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>ID</mat-label>
+            <input matInput [(ngModel)]="selectedUser.id" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Nome do usuário</mat-label>
+            <input matInput [(ngModel)]="selectedUser.name">
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="selectedUser.email">
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Senha</mat-label>
+            <input matInput [(ngModel)]="selectedUser.password" type="password" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Função</mat-label>
+            <input matInput [(ngModel)]="selectedUser.role">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de criação</mat-label>
+            <input matInput [(ngModel)]="selectedUser.created_at" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de atualização</mat-label>
+            <input matInput [(ngModel)]="selectedUser.updated_at" disabled>
+          </mat-form-field>
+        </div>
+        <div class="m-1">
+          <mat-form-field appearance="fill">
+            <mat-label>Data de exclusão</mat-label>
+            <input matInput [(ngModel)]="selectedUser.deleted_at" disabled>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-6 d-flex justify-content-center">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="save()"
+          class="m-1"
+        >
+          {{ updateMode ? 'Atualizar' : 'Inserir'}}
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="resetForm()"
+          class="m-1"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row mw-100 d-flex justify-content-center m-auto">
+    <div class="user__table col-12">
+      <app-table
+        [headers]="userHeaders"
+        [content]="userContent"
+        (removeEvent)="confirmRemove($event)"
+        (editEvent)="selectEdit($event)"
+        (restoreEvent)="confirmRestore($event)"
+      ></app-table>
+    </div>
+  </div>
+</div>

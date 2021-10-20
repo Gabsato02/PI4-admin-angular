@@ -32,6 +32,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { UserComponent } from './views/user/user.component';
 
 const generalComponents = [
   AppComponent,
@@ -46,6 +48,7 @@ const generalComponents = [
 
 const materialComponents = [
   MatButtonModule,
+  MatCardModule,
   MatDialogModule,
   MatIconModule,
   MatInputModule,
@@ -66,6 +69,7 @@ const materialComponents = [
 @NgModule({
   declarations: [
     generalComponents,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

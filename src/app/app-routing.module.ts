@@ -6,15 +6,22 @@ import { CharacteristicComponent } from './views/characteristic/characteristic.c
 import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
 import { LoginComponent } from './views/login/login.component';
 import { ItemComponent } from './views/item/item.component';
+import { UserComponent } from './views/user/user.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
   {
     path: 'login',
     component: LoginComponent,
   },
   {
     path: 'item',
-    component: ItemComponent
+    component: ItemComponent,
+    canActivate: [IsAuthenticatedGuard],
   },
   {
     path: 'categoria',
@@ -26,10 +33,16 @@ const routes: Routes = [
     component: TraitComponent,
     canActivate: [IsAuthenticatedGuard]
   },
-  { path: 'caracteristica',
+  {
+    path: 'caracteristica',
     component: CharacteristicComponent,
     canActivate: [IsAuthenticatedGuard]
-  }
+  },
+  {
+    path: 'usuario',
+    component: UserComponent,
+    canActivate: [IsAuthenticatedGuard]
+  },
 ];
 
 @NgModule({

@@ -1,3 +1,28 @@
-<div class="login mt-5">
-  <h1>Login</h1>
+<div class="login">
+  <mat-card>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()">
+        <h1>Pathfinder</h1>
+        <mat-form-field class="full-width-input">
+          <input matInput [(ngModel)]="user.email" name="email" type="email" placeholder="E-mail" required>
+          <mat-error *ngIf="isEmailValid()">
+            E-mail
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput [(ngModel)]="user.password" name="password" type="password" placeholder="Senha" required>
+          <mat-error *ngIf="isPasswordValid()">
+            Senha
+          </mat-error>
+        </mat-form-field>
+        <p class="error">{{error}}</p>
+        <button mat-raised-button color="primary">
+          <div *ngIf="loading" class="spinner spinner-border text-light" role="status">
+            <span class="sr-only"></span>
+          </div>
+          Entrar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
