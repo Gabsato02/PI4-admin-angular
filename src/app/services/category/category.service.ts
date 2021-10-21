@@ -32,13 +32,6 @@ export class CategoryService {
   }
 
   restore(id: number): Observable<any> {
-    const category: Category = {
-      id: undefined,
-      name: '',
-      created_at: '',
-      updated_at: '',
-      deleted_at: ''
-    };
-    return this.http.put<Category>(`${this.endpoint}/restore/${id}`, category);
+    return this.http.put<[]>(`${this.endpoint}/restore/${id}`, []);
   }
 }

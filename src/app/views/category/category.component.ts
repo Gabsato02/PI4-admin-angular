@@ -18,15 +18,19 @@ export class CategoryComponent implements OnInit {
   selectedCategory: Category = {
     id: undefined,
     name: '',
+    image: '',
     created_at: '',
     updated_at: '',
     deleted_at: ''
   };
   updateMode = false;
+  selectedImage: any = undefined;
+  preview?: string | ArrayBuffer | null;
 
   constructor(private categoryService: CategoryService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.preview = '../../../assets/default.png';
     this.list();
   }
 
@@ -73,15 +77,35 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  async onFileSelected(event: any): Promise<any> {
+    this.selectedImage = event.srcElement.files[0];
+    this.selectedCategory.image = await this.toBase64(this.selectedImage);
+  }
+
+  toBase64(file: any): any {
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+
+      reader.addEventListener('load', () => {
+        this.preview = reader.result;
+      }, false);
+    });
+  }
+
   resetForm(): void {
     this.selectedCategory = {
       id: undefined,
       name: '',
+      image: '',
       created_at: '',
       updated_at: '',
       deleted_at: ''
     };
     this.updateMode = false;
+    this.preview = '../../../assets/default.png';
   }
 
   selectEdit(id?: number): void {
@@ -92,10 +116,12 @@ export class CategoryComponent implements OnInit {
     this.selectedCategory = {
       id: selectedCategory.id,
       name: selectedCategory.name,
+      image: selectedCategory.image,
       created_at: selectedCategory.created_at,
       updated_at: selectedCategory.updated_at,
       deleted_at: selectedCategory.deleted_at
     };
+    this.preview = selectedCategory.image;
   }
 
   save(): void {
@@ -127,6 +153,7 @@ export class CategoryComponent implements OnInit {
   private async insert(): Promise<void> {
     const payload = {
       name: this.selectedCategory.name,
+      image: this.selectedCategory.image,
     };
 
     if (!payload?.name) {
