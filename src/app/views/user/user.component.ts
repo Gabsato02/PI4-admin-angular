@@ -21,15 +21,20 @@ export class UserComponent implements OnInit {
     email: '',
     password: '',
     role: '',
+    image: '',
     created_at: '',
     updated_at: '',
     deleted_at: ''
   };
   updateMode = false;
+  selectedImage: any = undefined;
+  preview?: string | ArrayBuffer | null;
+  allRoles = ['admin', 'user'];
 
   constructor(private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.preview = '../../../assets/default.png';
     this.list();
   }
 
@@ -76,6 +81,25 @@ export class UserComponent implements OnInit {
     });
   }
 
+  async onFileSelected(event: any): Promise<any> {
+    this.selectedImage = event.srcElement.files[0];
+    this.selectedUser.image = await this.toBase64(this.selectedImage);
+  }
+
+  toBase64(file: any): any {
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+
+      reader.addEventListener('load', () => {
+        this.preview = reader.result;
+      }, false);
+    });
+  }
+
+
   resetForm(): void {
     this.selectedUser = {
       id: undefined,
@@ -83,10 +107,12 @@ export class UserComponent implements OnInit {
       email: '',
       password: '',
       role: '',
+      image: '',
       created_at: '',
       updated_at: '',
       deleted_at: ''
     };
+    this.preview = '../../../assets/default.png';
     this.updateMode = false;
   }
 
@@ -101,10 +127,12 @@ export class UserComponent implements OnInit {
       email: selectedUser.email,
       password: selectedUser.password,
       role: selectedUser.role,
+      image: selectedUser.image,
       created_at: selectedUser.created_at,
       updated_at: selectedUser.updated_at,
       deleted_at: selectedUser.deleted_at
     };
+    this.preview = selectedUser.image;
   }
 
   save(): void {
@@ -136,19 +164,37 @@ export class UserComponent implements OnInit {
   private async insert(): Promise<void> {
     const payload = {
       name: this.selectedUser.name,
+      email: this.selectedUser.email,
+      password: this.selectedUser.password,
+      role: this.selectedUser.role,
+      image: this.selectedUser.image,
     };
 
-    if (!payload?.name) {
+    if (!payload?.name || !payload?.email || !payload?.password || !payload?.role || !payload?.image) {
       this.showSnackbar('Por favor, preencha corretamente os campos.');
       return;
     }
 
+    console.log(payload);
+
     try {
-      await this.userService.insert(payload).subscribe(() => {
-        this.list();
-        this.showSnackbar('Usuário inserido com sucesso!');
-        this.resetForm();
-      });
+      await this.userService.insert(payload).subscribe(
+        () => {
+          this.list();
+          this.showSnackbar('Usuário inserido com sucesso!');
+          this.resetForm();
+        },
+        error => {
+          console.log(error);
+          if (error.error && typeof error.error === 'string') {
+            this.showSnackbar(error.error);
+          } else if (error.message) {
+            this.showSnackbar('E-mail já cadastrado');
+          } else {
+            this.showSnackbar('Erro inesperado');
+          }
+        }
+      );
     } catch (error) {
       this.handleError(error);
     }

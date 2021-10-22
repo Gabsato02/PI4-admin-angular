@@ -152,7 +152,7 @@ export class CharacteristicComponent implements OnInit {
       characteristics_value: this.selectedCharacteristic.characteristics_value,
     };
 
-    if (!payload?.name) {
+    if (!payload?.name || !payload?.characteristics_value) {
       this.showSnackbar('Por favor, preencha corretamente os campos.');
       return;
     }
