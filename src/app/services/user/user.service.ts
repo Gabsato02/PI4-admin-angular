@@ -31,16 +31,6 @@ export class UserService {
   }
 
   restore(id: number): Observable<any> {
-    const user: User = {
-      id: undefined,
-      name: '',
-      email: '',
-      password: '',
-      role: '',
-      created_at: '',
-      updated_at: '',
-      deleted_at: ''
-    };
-    return this.http.put<User>(`${this.endpoint}/restore/${id}`, user);
+    return this.http.put<[]>(`${this.endpoint}/restore/${id}`, []);
   }
 }

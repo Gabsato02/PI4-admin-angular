@@ -49,19 +49,19 @@
       <div class="col-6 d-flex justify-content-center">
         <button
           mat-raised-button
-          color="accent"
-          (click)="save()"
-          class="m-1"
-        >
-          {{ updateMode ? 'Atualizar' : 'Inserir'}}
-        </button>
-        <button
-          mat-raised-button
           color="warn"
           (click)="resetForm()"
           class="m-1"
         >
           Cancelar
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="save()"
+          class="m-1"
+        >
+          {{ updateMode ? 'Atualizar' : 'Inserir'}}
         </button>
       </div>
     </div>

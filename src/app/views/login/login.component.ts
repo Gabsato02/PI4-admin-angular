@@ -47,11 +47,15 @@ export class LoginComponent implements OnInit {
       this.error = '';
       try {
         this.loading = true;
-        const response = this.authService.login(this.user).subscribe(
-          () => {
-            console.log(response);
-            localStorage.setItem('id_token', Math.random().toString(36).substr(2));
-            this.router.navigate(['/item']);
+        this.authService.login(this.user).subscribe(
+          response => {
+            const role: any = response;
+            if (role.message === 'admin') {
+              localStorage.setItem('id_token', Math.random().toString(36).substr(2));
+              this.router.navigate(['/item']);
+            } else {
+              this.error = 'Usuário sem permissão';
+            }
           },
           () => {
             this.error = 'Credenciais inválidas';
