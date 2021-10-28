@@ -35,20 +35,7 @@ export class ItemService {
   }
 
   restore(id: number): Observable<any> {
-    const item: Item = {
-      id: undefined,
-      name: '',
-      price: 0,
-      description: '',
-      volume: '',
-      category_id: 0,
-      traits: [],
-      characteristics: [],
-      created_at: '',
-      updated_at: '',
-      deleted_at: ''
-    };
-    return this.http.put<Item>(`${this.endpoint}/restore/${id}`, item);
+    return this.http.put<Item>(`${this.endpoint}/restore/${id}`, {});
   }
 
   removeTrait(itemId?: number, traitId?: number): Observable<any> {
