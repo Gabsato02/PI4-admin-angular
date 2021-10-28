@@ -8,6 +8,7 @@ export interface Item {
     description: string;
     volume: string;
     category_id: number;
+    image: string;
     traits: Array<Trait>;
     characteristics: Array<Characteristic>;
     created_at: string | null;

@@ -39,6 +39,7 @@ export class ItemComponent implements OnInit {
     description: '',
     volume: '',
     category_id: 0,
+    image: '',
     traits: [],
     characteristics: [],
     created_at: '',
@@ -53,6 +54,8 @@ export class ItemComponent implements OnInit {
   allTraitsFormControl = new FormControl();
   allCharacteristicsFormControl = new FormControl();
   updateMode = false;
+  selectedImage: any = undefined;
+  preview?: string | ArrayBuffer | null;
 
   constructor(
     private itemService: ItemService,
@@ -68,6 +71,7 @@ export class ItemComponent implements OnInit {
     this.listCategories();
     this.listTraits();
     this.listCharacteristics();
+    this.preview = '../../../assets/default.png';
   }
 
   // FUNÇÕES PÚBLICAS DE UTILIDADE
@@ -113,6 +117,24 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  async onFileSelected(event: any): Promise<any> {
+    this.selectedImage = event.srcElement.files[0];
+    this.selectedItem.image = await this.toBase64(this.selectedImage);
+  }
+
+  toBase64(file: any): any {
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+
+      reader.addEventListener('load', () => {
+        this.preview = reader.result;
+      }, false);
+    });
+  }
+
   onCharacteristicSelect(characteristic: Characteristic): void {
     const isRepeated = Boolean(this.selectedItem.characteristics.find((selectedCharacteristic) => {
       return selectedCharacteristic.id === characteristic.id;
@@ -135,6 +157,7 @@ export class ItemComponent implements OnInit {
       description: '',
       volume: '',
       category_id: 0,
+      image: '',
       traits: [],
       characteristics: [],
       created_at: '',
@@ -142,6 +165,7 @@ export class ItemComponent implements OnInit {
       deleted_at: ''
     };
     this.updateMode = false;
+    this.preview = '../../../assets/default.png';
   }
 
   selectEdit(id?: number): void {
@@ -158,10 +182,13 @@ export class ItemComponent implements OnInit {
       traits: selectedItem.traits,
       characteristics: selectedItem.characteristics,
       category_id: selectedItem.category_id,
+      image: selectedItem.image,
       created_at: selectedItem.created_at,
       updated_at: selectedItem.updated_at,
       deleted_at: selectedItem.deleted_at
     };
+
+    this.preview = selectedItem.image;
   }
 
   save(): void {
@@ -230,6 +257,7 @@ export class ItemComponent implements OnInit {
       description: this.selectedItem.description,
       volume: this.selectedItem.volume,
       category_id: this.selectedItem.category_id,
+      image: this.selectedItem.image,
       traits: this.selectedItem.traits
     };
 
