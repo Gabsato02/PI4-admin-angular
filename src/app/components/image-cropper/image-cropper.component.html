@@ -1,0 +1,19 @@
+<div class="d-flex flex-column w-100 justify-content-center" style="max-width: 500px">
+  <button *ngIf="selectMode" type="button" class="my-1" mat-raised-button (click)="fileInput.click()">Escolher foto</button>
+  
+  <div *ngIf="!selectMode" class="d-flex justify-content-center">
+    <button type="button" class="my-1 me-1" color="warn" mat-raised-button (click)="clearImage()">Cancelar</button>
+    <button type="button" class="my-1 ms-1" color="accent" mat-raised-button (click)="saveImage()">Salvar</button>
+  </div>
+  
+  <input type="file" hidden #fileInput (change)="fileChangeEvent($event)" />
+
+  <image-cropper
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 3"
+      format="png"
+      [imageBase64]="base64Image"
+      (imageCropped)="imageCropped($event)"
+  ></image-cropper>
+</div>
+
