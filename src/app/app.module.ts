@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './views/category/category.component';
 import { TableComponent } from './components/table/table.component';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { LoginComponent } from './views/login/login.component';
 import { ItemComponent } from './views/item/item.component';
@@ -34,12 +35,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { UserComponent } from './views/user/user.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 const generalComponents = [
   AppComponent,
   CategoryComponent,
   ConfirmDialogComponent,
   TableComponent,
+  ImageCropperComponent,
   TraitComponent,
   CharacteristicComponent,
   LoginComponent,
@@ -78,7 +81,8 @@ const materialComponents = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    materialComponents
+    materialComponents,
+    ImageCropperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

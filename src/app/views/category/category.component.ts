@@ -25,12 +25,10 @@ export class CategoryComponent implements OnInit {
   };
   updateMode = false;
   selectedImage: any = undefined;
-  preview?: string | ArrayBuffer | null;
 
   constructor(private categoryService: CategoryService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.preview = '../../../assets/default.png';
     this.list();
   }
 
@@ -77,22 +75,9 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  async onFileSelected(event: any): Promise<any> {
-    this.selectedImage = event.srcElement.files[0];
-    this.selectedCategory.image = await this.toBase64(this.selectedImage);
-  }
-
-  toBase64(file: any): any {
-    return new Promise<any>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-
-      reader.addEventListener('load', () => {
-        this.preview = reader.result;
-      }, false);
-    });
+  onFileSelected(image: any): void {
+    this.selectedImage = image;
+    this.selectedCategory.image = image;
   }
 
   resetForm(): void {
@@ -105,7 +90,7 @@ export class CategoryComponent implements OnInit {
       deleted_at: ''
     };
     this.updateMode = false;
-    this.preview = '../../../assets/default.png';
+    this.selectedImage = '';
   }
 
   selectEdit(id?: number): void {
@@ -121,7 +106,7 @@ export class CategoryComponent implements OnInit {
       updated_at: selectedCategory.updated_at,
       deleted_at: selectedCategory.deleted_at
     };
-    this.preview = selectedCategory.image;
+    this.selectedImage = selectedCategory.image;
   }
 
   save(): void {
@@ -153,7 +138,7 @@ export class CategoryComponent implements OnInit {
   private async insert(): Promise<void> {
     const payload = {
       name: this.selectedCategory.name,
-      image: this.selectedCategory.image,
+      image: this.selectedImage,
     };
 
     if (!payload?.name) {

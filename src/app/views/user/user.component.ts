@@ -28,13 +28,11 @@ export class UserComponent implements OnInit {
   };
   updateMode = false;
   selectedImage: any = undefined;
-  preview?: string | ArrayBuffer | null;
   allRoles = ['admin', 'user'];
 
   constructor(private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.preview = '../../../assets/default.png';
     this.list();
   }
 
@@ -81,22 +79,9 @@ export class UserComponent implements OnInit {
     });
   }
 
-  async onFileSelected(event: any): Promise<any> {
-    this.selectedImage = event.srcElement.files[0];
-    this.selectedUser.image = await this.toBase64(this.selectedImage);
-  }
-
-  toBase64(file: any): any {
-    return new Promise<any>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-
-      reader.addEventListener('load', () => {
-        this.preview = reader.result;
-      }, false);
-    });
+  onFileSelected(image: any): void {
+    this.selectedImage = image;
+    this.selectedUser.image = image;
   }
 
 
@@ -112,7 +97,7 @@ export class UserComponent implements OnInit {
       updated_at: '',
       deleted_at: ''
     };
-    this.preview = '../../../assets/default.png';
+    this.selectedImage = '';
     this.updateMode = false;
   }
 
@@ -132,7 +117,7 @@ export class UserComponent implements OnInit {
       updated_at: selectedUser.updated_at,
       deleted_at: selectedUser.deleted_at
     };
-    this.preview = selectedUser.image;
+    this.selectedImage = selectedUser.image;
   }
 
   save(): void {
@@ -167,7 +152,7 @@ export class UserComponent implements OnInit {
       email: this.selectedUser.email,
       password: this.selectedUser.password,
       role: this.selectedUser.role,
-      image: this.selectedUser.image,
+      image: this.selectedImage,
     };
 
     if (!payload?.name || !payload?.email || !payload?.password || !payload?.role || !payload?.image) {
