@@ -160,7 +160,7 @@ export class CharacteristicComponent implements OnInit {
     try {
       await this.characteristicService.insert(payload).subscribe(() => {
         this.list();
-        this.showSnackbar('Usuário inserido com sucesso!');
+        this.showSnackbar('Característica inserido com sucesso!');
         this.resetForm();
       });
     } catch (error) {

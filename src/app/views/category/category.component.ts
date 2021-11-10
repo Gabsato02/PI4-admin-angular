@@ -149,7 +149,7 @@ export class CategoryComponent implements OnInit {
     try {
       await this.categoryService.insert(payload).subscribe(() => {
         this.list();
-        this.showSnackbar('Usuário inserido com sucesso!');
+        this.showSnackbar('Categoria inserida com sucesso!');
         this.resetForm();
       });
     } catch (error) {

@@ -254,7 +254,7 @@ export class ItemComponent implements OnInit {
     try {
       await this.itemService.insert(payload).subscribe(() => {
         this.list();
-        this.showSnackbar('Usuário inserido com sucesso!');
+        this.showSnackbar('Item inserido com sucesso!');
         this.resetForm();
       });
     } catch (error) {

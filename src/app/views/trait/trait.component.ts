@@ -153,7 +153,7 @@ export class TraitComponent implements OnInit {
     try {
       await this.traitService.insert(payload).subscribe(() => {
         this.list();
-        this.showSnackbar('Usuário inserido com sucesso!');
+        this.showSnackbar('Traço inserido com sucesso!');
         this.resetForm();
       });
     } catch (error) {
