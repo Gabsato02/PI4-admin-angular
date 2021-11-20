@@ -4,6 +4,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { Auth } from 'src/app/models/auth';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class AuthService {
 
   login(user: Auth): Observable<Auth> {
     return this.http.post<Auth>(`${this.endpoint}/login`, user);
+  }
+
+  getUser(id: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.endpoint}/list/${id}`);
   }
 
   logout(): void {
