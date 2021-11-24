@@ -9,7 +9,7 @@
   <input type="file" hidden #fileInput (change)="fileChangeEvent($event)" />
 
   <image-cropper
-      [maintainAspectRatio]="true"
+      [maintainAspectRatio]="false"
       [aspectRatio]="4 / 3"
       format="png"
       [imageBase64]="base64Image"

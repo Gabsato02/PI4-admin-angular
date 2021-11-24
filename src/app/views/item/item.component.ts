@@ -243,7 +243,8 @@ export class ItemComponent implements OnInit {
       volume: this.selectedItem.volume,
       category_id: this.selectedItem.category_id,
       image: this.selectedImage,
-      traits: this.selectedItem.traits
+      traits: this.selectedItem.traits,
+      characteristics: this.selectedItem.characteristics
     };
 
     if (!payload?.name) {
